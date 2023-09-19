@@ -1,0 +1,85 @@
+scalar Date @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
+scalar Url @specifiedBy(url:"https://www.w3.org/Addressing/URL/url-spec.txt")
+
+type Mutation {
+    createBook(title: String, pages: Int, author: String): Book
+    addBook(book: BookInput!): Book
+    updateBook(id: ID!, book: BookInput!): Book
+    deleteBook(id: ID!): Book
+}
+
+type Query {
+    events: [Event]
+    event(id: ID!): Event
+    speakers: [Speaker]
+    speaker(id: ID!): Speaker
+    sessions: [Session]!
+    session(id: ID!): Session
+    findAllBooks: [Book]
+    findBook(id: ID!): Book
+}
+
+type Book {
+    id: ID!
+    title: String
+    pages: Int
+    author: String
+    reviews: [Review]
+}
+
+type Review {
+    id: ID!
+    title: String
+    comment: String
+    book: Book
+}
+
+input BookInput {
+    title: String
+    pages: Int
+    author: String
+}
+
+type Event {
+    id: ID!
+    name: String!
+    description: String!
+    startDate: Date!
+    endDate: Date!
+    cfpStartDate: Date!
+    cfpEndDate: Date!
+    location: String
+    website: Url
+    sessions(first: Int,last: Int,before: String,after: String): SessionConnection
+}
+
+type Session {
+    id: ID!
+    title: String!
+    description: String!
+    tags: [Tag]
+    level: String!
+}
+
+type Tag {
+    id: ID!
+    name: String!
+}
+
+type Speaker {
+    id: ID!
+    name: String!
+    title: String!
+    company: String!
+    gender: Gender!
+    country: String!
+    email: String!
+    phoneNumber: String!
+    twitter: String!
+}
+
+enum Gender {
+    MALE,
+    FEMALE,
+    NON_BINARY
+}
