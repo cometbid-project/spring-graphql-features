@@ -1,11 +1,17 @@
 scalar Date @specifiedBy(url:"https://tools.ietf.org/html/rfc3339")
 scalar Url @specifiedBy(url:"https://www.w3.org/Addressing/URL/url-spec.txt")
+scalar DateTime
 
 type Mutation {
     createBook(title: String, pages: Int, author: String): Book
     addBook(book: BookInput!): Book
     updateBook(id: ID!, book: BookInput!): Book
     deleteBook(id: ID!): Book
+    batchCreate(books: [BookInput!]!): [Book]
+    
+    createCoffee(name: String, size: Size): Coffee
+    updateCoffee(id: ID, name: String, size: Size): Coffee
+    deleteCoffee(id: ID): Coffee
 }
 
 type Query {
@@ -17,6 +23,11 @@ type Query {
     session(id: ID!): Session
     findAllBooks: [Book]
     findBook(id: ID!): Book
+    
+    findAllCoffees: [Coffee]!
+    findCoffee(id: ID): Coffee
+    
+    findAllOrders: [Order]!
 }
 
 type Book {
@@ -83,3 +94,29 @@ enum Gender {
     FEMALE,
     NON_BINARY
 }
+
+type Coffee {
+    id: ID!
+    name: String
+    size: Size
+}
+
+type Order {
+    orderId: ID!
+    coffee: Coffee
+    orderedOn: DateTime
+}
+
+type User {
+    userId: ID!
+    username: String
+}
+
+enum Size {
+    SHORT,
+    TALL,
+    GRANDE,
+    VENTI
+}
+
+

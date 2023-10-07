@@ -1,0 +1,27 @@
+query {
+  events {
+	id
+	name
+	description
+	startDate
+	endDate
+	cfpStartDate
+	cfpEndDate
+	location
+	website
+	sessions(first: 3, after: "T18z") {
+		edges {
+		  node {
+			id
+			title
+			description
+		  }
+		}
+		pageInfo {
+			hasNextPage
+			startCursor
+			endCursor
+		}
+	 }
+  }
+}

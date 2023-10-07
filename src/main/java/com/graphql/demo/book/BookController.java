@@ -9,6 +9,7 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Gbenga
@@ -42,6 +43,13 @@ public class BookController {
     @MutationMapping
     public Book addBook(@Argument BookInput book) {
         return bookRepository.save(new Book(book.title(),book.pages(),book.author()));
+    }
+    
+    @MutationMapping
+    public List<Book> batchCreate(@Argument List<BookInput> books) {
+    	return bookRepository.saveAll(books.stream().map(book -> 
+    				new Book(book.title(), book.pages(), book.author())
+    				).collect(Collectors.toList())); 
     }
 
     @MutationMapping

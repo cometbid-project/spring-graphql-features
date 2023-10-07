@@ -17,10 +17,20 @@ public class Tag {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String name;
 
 	public Tag() {
+	}
+
+	/**
+	 * @param id
+	 * @param name
+	 */
+	public Tag(Integer id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public Tag(String name) {
